@@ -12,23 +12,13 @@ public class L315 {
     }
     public static List<Integer> countSmaller(int[] nums) {
         Integer[] dp = new Integer[nums.length];
-        int max = Integer.MIN_VALUE;
-        for (int i=nums.length-1;i>=0;i--) {
-            int tmp = 0;
-            if (nums[i] > max){
-                max = nums[i];
-                tmp = nums.length-1-i;
-            }else {
-                for (int j = i + 1; j < nums.length; j++) {
-                    if (nums[i] > nums[j]) {
-                        tmp = dp[j] + 1;
-                        break;
-                    }
+        for (int i=nums.length-2;i>=0;i--){
+            for (int j = nums.length-1;j>i;j--){
+                if (nums[i]>nums[j]){
+                    dp[i] = Math.max(dp[i],dp[j]+1);
                 }
             }
-            dp[i] = tmp;
         }
-        List<Integer> result = Arrays.asList(dp);
-        return result;
+        return Arrays.asList(dp);
     }
 }

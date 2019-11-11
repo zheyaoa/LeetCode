@@ -2,31 +2,32 @@ package LeetCode;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class L140 {
-    ArrayList<String> list = new ArrayList<>();
-    ArrayList<String> result = new ArrayList<>();
+    HashMap<Integer,List<String>> map = new HashMap<>();
     public List<String> wordBreak(String s, List<String> wordDict) {
-        helper(s,wordDict,0);
-        return result;
-}
-    public void helper(String s,List<String> wordDict,int start){
+        return Helper(s,wordDict,0);
+    }
+    public List<String> Helper(String s,List<String> wordDict,int start){
+        if (map.containsKey(start)){
+            return map.get(start);
+        }
+        LinkedList<String> res = new LinkedList<>();
         if (start == s.length()){
-            StringBuffer tmp = new StringBuffer("");
-            for (int i=0;i<list.size()-1;i++){
-                tmp.append(list.get(i)+" ");
-            }
-            tmp.append(list.get(list.size()-1));
-            result.add(tmp.toString());
-            return;
+            res.add("");
         }
-        for (int end = start+1;end<=s.length();end++){
-            list.add(s.substring(start,end));
-            if(wordDict.contains(s.substring(start,end))) {
-                helper(s, wordDict, end);
+        for (int end = start + 1; end <= s.length(); end++) {
+            if (wordDict.contains(s.substring(start, end))) {
+                List<String> list = Helper(s, wordDict, end);
+                for (String l : list) {
+                    res.add(s.substring(start, end) + (l.equals("") ? "" : " ") + l);
+                }
             }
-            list.remove(list.size()-1);
         }
+        map.put(start,res);
+        return res;
     }
 }

@@ -5,7 +5,10 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        int[] nums = new int[]{1,2,3};
-        new L46().permute(nums);
+        char[][] island =  {{'1','1','0','0','0'},
+                            {'1','1','0','0','0'},
+                            {'0','0','1','0','0'},
+                            {'0','0','0','1','1'}};
+        new L200().numIslands(island);
     }
 }
